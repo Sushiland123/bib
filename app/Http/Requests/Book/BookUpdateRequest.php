@@ -20,15 +20,15 @@ class BookUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'titulo' => 'string|max:255',
-            'editorial' => 'string|max:255',
-            'ISBN' => 'string|max:255',
-            'idioma' => 'string|max:255',
-            'edicion' => 'string|max:255',
-            'autor' => 'string|max:255',
-            'descripcion' => 'string',
-            'año_publicacion' => 'integer',
-            'categoria' => 'string|max:255',
+            'tittle' => 'required|string|max:255',
+            'publisher' => 'required|string|max:255',
+            'ISBN' => 'required|string|max:255',
+            'lenguage' => 'required|string|max:255',
+            'version' => 'required|string|max:255',
+            'author' => 'required|string|max:255',
+            'description' => 'required|string',
+            'publication_date' => 'required|integer',
+            'categories' => 'required|string|max:255',
         ];
     }
 }

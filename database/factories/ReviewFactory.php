@@ -14,11 +14,11 @@ class ReviewFactory extends Factory
     public function definition(): array
     {
         return [
-            'id_usuario' => \App\Models\User::factory(), // Crea un usuario relacionado
-            'id_libro' => \App\Models\Book::factory(), // Crea un libro relacionado
+            'user_id' => \App\Models\User::factory(), // Crea un usuario relacionado
+            'book_id' => \App\Models\Book::factory(), // Crea un libro relacionado
             'rating' => fake()->numberBetween(1, 5), // Genera una calificación aleatoria entre 1 y 5
-            'comentario' => fake()->paragraph(), // Genera un comentario aleatorio
-            'fecha_publicacion' => fake()->dateTimeThisYear(), // Genera una fecha y hora aleatoria de este año
+            'comment' => fake()->paragraph(), // Genera un comentario aleatorio
+            'publication_date' => fake()->dateTimeThisYear(), // Genera una fecha y hora aleatoria de este año
         ];
     }
 }

@@ -13,8 +13,8 @@ namespace App\Http\Controllers;
         {
             $query = Book::query();
 
-            if ($request->has('categoria')) {
-                $query->where('categoria', $request->categoria);
+            if ($request->has('categories')) {
+                $query->where('categories', $request->categories);
             }
 
             $books = $query->get();
@@ -40,6 +40,6 @@ namespace App\Http\Controllers;
         {
             $book->delete();
 
-            return response()->json(['message' => 'Libro eliminado correctamente'], 200);
+            return response()->json(['message' => 'book successfully deleted'], 200);
         }
     }

@@ -15,15 +15,15 @@ class Book extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'titulo',
-        'editorial',
+        'tittle',
+        'publisher',
         'ISBN',
-        'idioma',
-        'edicion',
-        'autor',
-        'descripcion',
-        'año_publicacion',
-        'categoria',
+        'lenguage',
+        'version',
+        'author',
+        'description',
+        'publication_date',
+        'categories',
     ];
 
     /**
@@ -39,6 +39,6 @@ class Book extends Model
      */
     public function reviews()
     {
-        return $this->hasMany(Review::class, 'id_libro');
+        return $this->hasMany(Review::class, 'book_id');
     }
 }

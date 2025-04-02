@@ -15,11 +15,11 @@ class Review extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'id_usuario',
-        'id_libro',
+        'user_id',
+        'book_id',
         'rating',
-        'comentario',
-        'fecha_publicacion',
+        'comment',
+        'publication_date',
     ];
 
     /**
@@ -28,7 +28,7 @@ class Review extends Model
      * @var array<string, string>
      */
     protected $casts = [
-        'fecha_publicacion' => 'datetime',
+        'publication_date' => 'datetime',
     ];
 
     /**
@@ -36,7 +36,7 @@ class Review extends Model
      */
     public function user()
     {
-        return $this->belongsTo(User::class, 'id_usuario');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     /**
@@ -44,6 +44,6 @@ class Review extends Model
      */
     public function book()
     {
-        return $this->belongsTo(Book::class, 'id_libro');
+        return $this->belongsTo(Book::class, 'book_id');
     }
 }

@@ -18,8 +18,6 @@ class DatabaseSeeder extends Seeder
         User::factory(10)->create();
         Book::factory(50)->create();
         Review::factory(100)->create();
-
-        // Ejemplo para la tabla pivote (si la usas):
         PersonalLibrary::factory(150)->create();
     }
 }

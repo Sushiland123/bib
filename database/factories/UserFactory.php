@@ -16,11 +16,11 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'nombre' => fake()->name(),
-            'correo' => fake()->unique()->safeEmail(),
-            'nombreUsuario' => fake()->unique()->userName(),
-            'edad' => fake()->numberBetween(18, 65), // Edad entre 18 y 65 años
-            'país' => fake()->country(),
+            'name' => fake()->name(),
+            'email' => fake()->unique()->safeEmail(),
+            'username' => fake()->unique()->userName(),
+            'age' => fake()->numberBetween(18, 65), // Edad entre 18 y 65 años
+            'country' => fake()->country(),
             'password' => Hash::make('password'), // Hashea la contraseña
             'remember_token' => Str::random(10),
         ];

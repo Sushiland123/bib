@@ -17,8 +17,8 @@ class UserController extends Controller
     {
         $user = auth()->user();
 
-        $user->update($request->only('nombre', 'edad', 'país', 'nombreUsuario'));
+        $user->update($request->only('name', 'age', 'country', 'username'));
 
-        return response()->json(['message' => 'Perfil actualizado correctamente'], 200);
+        return response()->json(['message' => 'Profile successfuly updated'], 200);
     }
 }

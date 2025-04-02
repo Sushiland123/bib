@@ -13,15 +13,15 @@ namespace App\Http\Controllers;
         {
             // Verificar si el libro existe (Opcional, pero recomendado)
             if (!Book::find($bookId)) {
-                return response()->json(['message' => 'Libro no encontrado'], 404);
+                return response()->json(['message' => 'Book not found'], 404);
             }
 
             $review = Review::create([
                 'user_id' => auth()->id(),
                 'book_id' => $bookId,
                 'rating' => $request->rating,
-                'comentario' => $request->comentario,
-                'fecha_publicacion' => now(),
+                'comment' => $request->comment,
+                'publication_date' => now(),
             ]);
 
             return response()->json($review, 201);
@@ -31,7 +31,7 @@ namespace App\Http\Controllers;
         {
             // Verificar si el libro existe (Opcional, pero recomendado)
             if (!Book::find($bookId)) {
-                return response()->json(['message' => 'Libro no encontrado'], 404);
+                return response()->json(['message' => 'book not found'], 404);
             }
 
             $reviews = Review::where('book_id', $bookId)->get();

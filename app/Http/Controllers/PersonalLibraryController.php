@@ -19,15 +19,15 @@ namespace App\Http\Controllers;
 
     // Verificar si el libro existe (Opcional, pero recomendado)
     if (!Book::find($bookId)) {
-        return response()->json(['message' => 'Libro no encontrado'], 404);
+        return response()->json(['message' => 'Book not found'], 404);
     }
 
     // Verificar si el libro ya está en la biblioteca del usuario (Opcional)
     if ($user->books()->where('book_id', $bookId)->exists()) {
-        return response()->json(['message' => 'El libro ya está en tu biblioteca'], 409);
+        return response()->json(['message' => 'The book is alredy in your library'], 409);
     }
 
     $user->books()->attach($bookId);
 
-    return response()->json(['message' => 'Libro agregado correctamente'], 200);
+    return response()->json(['message' => 'book successfuly added'], 200);
 }}

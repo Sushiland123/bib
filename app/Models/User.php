@@ -18,12 +18,13 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'nombre',
-        'correo',
-        'nombreUsuario',
-        'edad',
-        'país',
+        'name',
+        'email',
+        'username',
+        'age',
+        'country',
         'password',
+        'role',
     ];
 
     /**
@@ -58,6 +59,6 @@ class User extends Authenticatable
      */
     public function reviews()
     {
-        return $this->hasMany(Review::class, 'id_usuario');
+        return $this->hasMany(Review::class, 'user_id');
     }
 }
