@@ -24,7 +24,7 @@ class User extends Authenticatable
         'age',
         'country',
         'password',
-        'role',
+        'role', 
     ];
 
     /**
@@ -60,5 +60,16 @@ class User extends Authenticatable
     public function reviews()
     {
         return $this->hasMany(Review::class, 'user_id');
+    }
+
+    /**
+     * Check if the user has a specific role.
+     *
+     * @param  string  $role
+     * @return bool
+     */
+    public function hasRole($role)
+    {
+        return $this->role === $role;
     }
 }

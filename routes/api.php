@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\PersonalLibraryController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Middleware\CheckRole;
 
 Route::middleware('api')->prefix('v1')->group(function () {
     // Autenticación
@@ -13,13 +14,13 @@ Route::middleware('api')->prefix('v1')->group(function () {
     Route::post('/auth/login', [AuthController::class, 'login']);
     Route::post('/auth/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
     // otorgar privilegios de administrador
-    Route::post('/auth/admin/{userId}', [AuthController::class, 'grantAdminPrivileges'])->middleware('role:admin');
+    Route::post('/auth/admin/{userId}', [AuthController::class, 'grantAdminPrivileges'])->middleware(['auth:sanctum', CheckRole::class . ':admin']);
     // revocar privilegios de administrador
-    Route::delete('/auth/admin/{userId}', [AuthController::class, 'revokeAdminPrivileges'])->middleware('role:admin');
+    Route::delete('/auth/admin/{userId}', [AuthController::class, 'revokeAdminPrivileges'])->middleware(['auth:sanctum', CheckRole::class . ':admin']);
     // Obtener todos los usuarios
-    Route::get('/auth/users', [AuthController::class, 'index'])->middleware('role:admin');
+    Route::get('/auth/users', [AuthController::class, 'index'])->middleware(['auth:sanctum', CheckRole::class . ':admin']);
     // Obtener usuario por id
-    Route::get('/auth/users/{userId}', [AuthController::class, 'show'])->middleware('role:admin');
+    Route::get('/auth/users/{userId}', [AuthController::class, 'show'])->middleware(['auth:sanctum', CheckRole::class . ':admin']);
 
     // Perfil de Usuario
     Route::get('/profile/user', [UserController::class, 'profile'])->middleware('auth:sanctum');
@@ -27,9 +28,9 @@ Route::middleware('api')->prefix('v1')->group(function () {
 
     // Libros
     Route::get('/books', [BookController::class, 'index'])->middleware('auth:sanctum');
-    Route::post('/books', [BookController::class, 'store'])->middleware('role:admin');
-    Route::put('/books/{book}', [BookController::class, 'update'])->middleware('role:admin');
-    Route::delete('/books/{book}', [BookController::class, 'destroy'])->middleware('role:admin');
+    Route::post('/books', [BookController::class, 'store'])->middleware(['auth:sanctum', CheckRole::class . ':admin']);
+    Route::put('/books/{book}', [BookController::class, 'update'])->middleware(['auth:sanctum', CheckRole::class . ':admin']);
+    Route::delete('/books/{book}', [BookController::class, 'destroy'])->middleware(['auth:sanctum', CheckRole::class . ':admin']);
 
     // Agregar libro a la biblioteca personal
     Route::post('/library/{bookId}', [PersonalLibraryController::class, 'addBook'])->middleware('auth:sanctum');
