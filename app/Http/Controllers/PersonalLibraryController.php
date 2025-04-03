@@ -8,28 +8,23 @@ use App\Models\Book;
 
 class PersonalLibraryController extends Controller
 {
-    public function addBook(Request $request, $bookId)
+    public function addBook($bookId)
     {
         $user = auth()->user();
 
-        // Validar que el 'id' está presente y es un entero positivo
-        $request->validate([
-            'id' => 'required|integer|min:1',
-        ]);
-
         // Verificar si el libro existe (Opcional, pero recomendado)
         if (!Book::find($bookId)) {
-            return response()->json(['message' => 'Libro no encontrado'], 404);
+            return response()->json(['message' => 'book not found'], 404);
         }
 
         // Verificar si el libro ya está en la biblioteca del usuario (Opcional)
         if ($user->books()->where('book_id', $bookId)->exists()) {
-            return response()->json(['message' => 'El libro ya está en tu biblioteca'], 409);
+            return response()->json(['message' => 'the book is alredy in your library'], 409);
         }
 
         $user->books()->attach($bookId);
 
-        return response()->json(['message' => 'Libro agregado correctamente'], 200);
+        return response()->json(['message' => 'book successfuly added'], 200);
     }
 
     public function index()

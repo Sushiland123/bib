@@ -11,16 +11,27 @@ class PersonalLibraryTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_user_can_add_books_to_personal_library()
+    public function test_user_can_add_book_to_personal_library()
     {
+        // Crear un usuario y un libro
         $user = User::factory()->create();
         $book = Book::factory()->create();
-
-        $response = $this->actingAs($user, 'sanctum')->postJson('/api/v1/library', ['id' => $book->id]);
-
+    
+        // Hacer petición autenticada usando Sanctum
+        $response = $this->actingAs($user, 'sanctum')
+            ->postJson("/api/v1/library/{$book->id}");
+    
+        // Verificar que la respuesta es 200 y contiene el mensaje esperado
         $response->assertStatus(200)
-                 ->assertJson(['message' => 'Libro agregado correctamente']);
+                 ->assertJson(['message' => 'book successfuly added']);
+    
+        // Verificar que el libro realmente está en la relación del usuario
+        $this->assertDatabaseHas('personal_libraries', [
+            'user_id' => $user->id,
+            'book_id' => $book->id,
+        ]);
     }
+    
 
     public function test_user_can_view_books_in_personal_library()
     {

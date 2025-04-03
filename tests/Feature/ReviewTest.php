@@ -18,22 +18,39 @@ class ReviewTest extends TestCase
 
         $response = $this->actingAs($user, 'sanctum')->postJson('/api/v1/books/' . $book->id . '/reviews', [
             'rating' => 5,
-            'review_text' => 'Great book!',
+            'comment' => 'Great book!',
         ]);
 
         $response->assertStatus(201)
-                 ->assertJsonFragment(['review_text' => 'Great book!']);
+                 ->assertJsonFragment(['comment' => 'Great book!']);
     }
 
-    public function test_user_can_view_reviews_for_books()
+    public function test_user_can_view_their_review_for_a_specific_book()
     {
+        // Crear un usuario y un libro
         $user = User::factory()->create();
         $book = Book::factory()->create();
-        $review = Review::factory()->create(['book_id' => $book->id, 'user_id' => $user->id]);
-
-        $response = $this->getJson('/api/v1/books/' . $book->id . '/reviews');
-
+    
+        // Crear una reseña para ese libro y ese usuario
+        $review = \App\Models\Review::factory()->create([
+            'user_id' => $user->id,
+            'book_id' => $book->id,
+            'rating' => 5,
+            'comment' => 'Excelente libro',
+        ]);
+    
+        // Usuario autenticado hace GET a la ruta para ver las reseñas del libro
+        $response = $this->actingAs($user, 'sanctum')
+            ->getJson("/api/v1/books/{$book->id}/reviews");
+    
+        // Verifica que devuelve 200 y contiene la reseña
         $response->assertStatus(200)
-                 ->assertJsonFragment(['review_text' => $review->review_text]);
+                 ->assertJsonFragment([
+                     'user_id' => $user->id,
+                     'book_id' => $book->id,
+                     'rating' => 5,
+                     'comment' => 'Excelente libro',
+                 ]);
     }
+    
 }
