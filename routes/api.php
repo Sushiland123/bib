@@ -31,7 +31,6 @@ Route::middleware('api')->prefix('v1')->group(function () {
     Route::put('/books/{book}', [BookController::class, 'update'])->middleware('role:admin');
     Route::delete('/books/{book}', [BookController::class, 'destroy'])->middleware('role:admin');
 
-
     // Agregar libro a la biblioteca personal
     Route::post('/library/{bookId}', [PersonalLibraryController::class, 'addBook'])->middleware('auth:sanctum');
     // Eliminar libro de la biblioteca personal

@@ -8,10 +8,9 @@ use App\Models\Book;
 
 class PersonalLibraryController extends Controller
 {
-    public function store(Request $request)
+    public function addBook(Request $request, $bookId)
     {
         $user = auth()->user();
-        $bookId = $request->query('id');
 
         // Validar que el 'id' está presente y es un entero positivo
         $request->validate([
@@ -39,6 +38,18 @@ class PersonalLibraryController extends Controller
         $books = $user->books;
 
         return response()->json($books, 200);
+    }
+
+    public function show($bookId)
+    {
+        $user = auth()->user();
+        $book = $user->books()->where('book_id', $bookId)->first();
+
+        if (!$book) {
+            return response()->json(['message' => 'Libro no encontrado en tu biblioteca'], 404);
+        }
+
+        return response()->json($book, 200);
     }
 
     public function destroy($bookId)
