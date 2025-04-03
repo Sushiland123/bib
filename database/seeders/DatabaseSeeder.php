@@ -15,6 +15,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        $this->call(RootAdminSeeder::class); // Añadir el seeder del administrador raíz
+
         User::factory(10)->create();
         Book::factory(50)->create();
         Review::factory(100)->create();

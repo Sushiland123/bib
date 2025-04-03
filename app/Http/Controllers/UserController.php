@@ -8,17 +8,15 @@ use App\Http\Requests\User\UpdateProfileRequest;
 
 class UserController extends Controller
 {
-    public function profile()
+    public function updateRole(Request $request, User $user)
     {
-        return response()->json(auth()->user(), 200);
-    }
+        $request->validate([
+            'role' => 'required|string|in:user,admin',
+        ]);
 
-    public function updateProfile(UpdateProfileRequest $request)
-    {
-        $user = auth()->user();
+        $user->role = $request->role;
+        $user->save();
 
-        $user->update($request->only('name', 'age', 'country', 'username'));
-
-        return response()->json(['message' => 'Profile successfuly updated'], 200);
+        return response()->json(['message' => 'Role updated successfully']);
     }
 }
